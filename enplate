@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+#importing the os module
+import os,sys,shutil
+#to get the current working directory
+arguments = sys.argv[1:]
+directory = os.getcwd()
+# our_file = __file__
+# our_file = our_file.removesuffix('main.py')
+our_file = f"{os.path.expanduser('~')}/.config/enplate"
+# https://stackoverflow.com/questions/1868714/how-do-i-copy-an-entire-directory-of-files-into-an-existing-directory-using-pyth
+def copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
+
+if arguments[0] == "add":
+	dir_copy = input("Do you want to add the currnet dir [y/n]:- ")
+	if dir_copy == "y":
+		name_of_dir = input("what should be the name of the template:- ")
+		dest_dir = f"{our_file}/{name_of_dir}"
+		files = os.listdir(directory)
+		shutil.copytree(directory, dest_dir)
+		print("copied",files)
+	if dir_copy == "n":
+		print("abort operation msg:user cancelation")
+else:
+	src = f"{our_file}/{arguments[0]}"
+	try:
+		files = os.listdir(src)
+	except Exception as e:
+		print(f"{arguments[0]} no such template exists, check spelling or create a new")
+		sys.exit()		
+	trg = directory
+	copytree(src,trg)
+	if "run.sh" in files:
+		os.system("./run.sh")
+	print(f"setup of template {arguments[0]}")
+			
+
+
