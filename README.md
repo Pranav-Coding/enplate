@@ -27,4 +27,9 @@ After this you can use your template aswell
 
 if you want you can also contribute your template style to the repo
 
+You can also run commands while the setup, 
+
+when you make a new template by  ```enplate add ``` 
+in the same folder create a run.sh file and make it executable 
+so next time when you set up the template the run.sh file will be executed
 # hope this make seting up your new project eazy 
